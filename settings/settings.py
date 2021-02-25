@@ -37,6 +37,7 @@ ALLOWED_HOSTS = [
     '.us-west-2.elb.amazonaws.com',
     '.compute-1.amazonaws.com',
     'localhost',
+    '0.0.0.0',
 ]
 
 EC2_PRIVATE_IP = None
@@ -89,6 +90,10 @@ INSTALLED_APPS = [
 
     # Applications
     'accounts',
+    'topic',
+    'post',
+    'comment',
+    'user',
 ]
 
 SITE_ID = 1
