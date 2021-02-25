@@ -8,4 +8,4 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['title', 'author', 'content', 'post', 'created_at', 'updated_at']
+        fields = ['title', 'author', 'description', 'post', 'created_at', 'updated_at']

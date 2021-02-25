@@ -21,3 +21,12 @@ class TimestampModel(models.Model):
 
     created_at = models.DateTimeField(null=False, blank=True, auto_now_add=True)
     updated_at = models.DateTimeField(null=False, blank=True, auto_now=True)
+
+class BaseInfoModel (TimestampModel):
+    title = models.CharField(max_length=100),
+    description = models.TextField()
+    author = models.ForeignKey('accounts.User', related_name='%(class)s', on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        abstract = True
+        ordering = ["updated_at"]
