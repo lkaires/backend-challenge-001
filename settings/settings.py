@@ -90,13 +90,15 @@ INSTALLED_APPS = [
 
     # Applications
     'accounts',
-    'topic',
-    'post',
-    'comment',
-    'user',
+    'topic.apps.TopicConfig',
+    'post.apps.PostConfig',
+    'comment.apps.CommentConfig',
+    'user.apps.UserConfig',
 ]
 
 SITE_ID = 1
+
+APPEND_SLASH = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,7 +145,7 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 ###
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -179,10 +181,11 @@ if DEBUG or ENVIRONMENT == 'test':
 ###
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20
