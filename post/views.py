@@ -11,10 +11,10 @@ class PostViewSet(AuthorPermissionViewSet):
 
     # Returns topic pk (url_name)
     def get_topic(self):
-        return get_object_or_404(Topic, url_name=self.kwargs.get('topic_url_name'))
-
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user, topic=self.get_topic())
+        return get_object_or_404(Topic, url_name=self.kwargs.get('topic_pk'))
 
     def get_queryset(self):
         return Post.objects.filter(topic=self.get_topic())
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user, topic=self.get_topic())
