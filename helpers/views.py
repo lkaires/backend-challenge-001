@@ -6,6 +6,8 @@ class AuthorPermissionViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadyOnly]
 
 class DetailViewSet(viewsets.ModelViewSet):
+    detail_serializer_class = None
+
     def get_serializer_class(self):
         if self.action == 'retrieve':
             if hasattr(self, 'detail_serializer_class'):
