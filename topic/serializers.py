@@ -10,6 +10,10 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
     posts = SerializerMethodField()
 
     def get_posts(self, instance):
+        """
+            Returns 3 most recent posts
+            Intended for list view
+        """
         posts = Post.objects.filter(topic=instance.url_name)
         return PostSerializer(posts, read_only=True, many=True, allow_null=True).data[3:]
 
@@ -19,5 +23,9 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
 
 class DetailTopicSerializer(TopicSerializer):
     def get_posts(self, instance):
+        """
+            Returns all posts
+            Intended for detail view
+        """
         posts = Post.objects.filter(topic=instance.url_name)
         return PostSerializer(posts, read_only=True, many=True, allow_null=True).data

@@ -11,6 +11,10 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     comments = SerializerMethodField()
 
     def get_comments(self, instance):
+        """
+            Returns the 3 most recent comments
+            Intended for list view
+        """
         comments = Comment.objects.filter(post=instance.id)
         return CommentSerializer(comments, many=True, read_only=True, allow_null=True).data[3:]
 
@@ -20,5 +24,9 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
 
 class DetailPostSerializer(PostSerializer):
     def get_comments(self, instance):
+        """
+            Returns all comments
+            Intended for detail view
+        """
         comments = Comment.objects.filter(post=instance.id)
         return CommentSerializer(comments, many=True, read_only=True, allow_null=True).data

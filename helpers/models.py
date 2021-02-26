@@ -23,6 +23,10 @@ class TimestampModel(models.Model):
     updated_at = models.DateTimeField(null=False, blank=True, auto_now=True)
 
 class BaseInfoModel (TimestampModel):
+    """
+        Extend this model to have basic info
+        Orders by update
+    """
     title = models.CharField(max_length=100, default="", blank=True)
     description = models.TextField()
     author = models.ForeignKey('accounts.User', related_name='%(class)s', on_delete=models.SET_NULL, null=True)
