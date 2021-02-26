@@ -25,9 +25,8 @@ from django.utils.translation import ugettext as _
 # Models
 ###
 class User(AbstractUser):
-    # Override user model here
-    pass
-
+    class Meta:
+        ordering = ['id']
 
 class ChangeEmailRequest(models.Model):
     # Helpers
