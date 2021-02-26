@@ -10,10 +10,10 @@ class CommentViewSet(AuthorPermissionViewSet):
     serializer_class = CommentSerializer
 
     def get_post(self):
-        return get_object_or_404(Post, id=self.kwargs.get('post_id'))
+        return get_object_or_404(Post, id=self.kwargs.get('post_pk'))
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user,post=self.get_post())
 
     def get_queryset(self):
-        return Comment.ordering.filter(post=self.get_post())
+        return Comment.objects.filter(post=self.get_post())

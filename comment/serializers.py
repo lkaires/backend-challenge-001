@@ -3,7 +3,7 @@ from comment.models import Comment
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
-    post = serializers.ReadOnlyField(source='post.title')
+    post = serializers.ReadOnlyField(source='post.id')
     created_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
