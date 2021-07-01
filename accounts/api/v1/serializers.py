@@ -17,6 +17,11 @@ from accounts.forms import (
     CustomResetPasswordForm,
 )
 
+from accounts.models import User as Author
+from topic.serializers import NestedTopicSerializer
+from post.serializers import NestedPostSerializer
+from comment.serializers import NestedCommentSerializer
+
 
 ###
 # Serializers
@@ -53,3 +58,23 @@ class PasswordResetSerializer(BasePasswordResetSerializer):
             'email_template_name': 'account/password_reset_message.txt',
             'html_email_template_name': 'account/password_reset_message.html',
         }
+
+
+class UserSerializer(serializers.ModelSerializer):
+    topics = serializers.SerializerMethodField()
+    posts = serializers.SerializerMethodField()
+    comments = serializers.SerializerMethodField()
+
+    def get_topics(self, instance):
+        return NestedTopicSerializer(instance.topic, many=True, allow_null=True).data
+    
+    def get_posts(self, instance):
+        return NestedPostSerializer(instance.post, many=True, allow_null=True).data
+
+    def get_comments(self, instance):
+        return NestedCommentSerializer(instance.comment, many=True, allow_null=True).data
+
+    class Meta:
+        model = Author
+        fields = ['id', 'username', 'topics', 'posts', 'comments']
+        read_only_fields = fields

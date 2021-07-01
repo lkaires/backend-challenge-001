@@ -6,6 +6,8 @@ Model helper
 ###
 from django.db import models
 
+from accounts.models import User
+
 
 ###
 # Helpers
@@ -27,10 +29,18 @@ class BaseInfoModel (TimestampModel):
         Extend this model to have basic info
         Orders by update
     """
-    title = models.CharField(max_length=100, default="", blank=True)
+    title = models.CharField(
+        max_length=100,
+    )
     description = models.TextField()
-    author = models.ForeignKey('accounts.User', related_name='%(class)s', on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(
+        User,
+        related_name='%(class)s',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         abstract = True
-        ordering = ["updated_at"]
+        ordering = ["-updated_at"]

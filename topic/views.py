@@ -1,12 +1,14 @@
-from django.shortcuts import render
-from helpers.views import AuthorPermissionViewSet, DetailViewSet
-from topic.serializers import TopicSerializer, DetailTopicSerializer
-from topic.models import Topic
+from rest_framework import permissions, viewsets
+from helpers.permissions import IsAuthorOrReadyOnly
 
-class TopicViewSet(AuthorPermissionViewSet, DetailViewSet):
+from topic.models import Topic
+from topic.serializers import TopicSerializer
+
+class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
-    detail_serializer_class = DetailTopicSerializer
+    lookup_field= 'url_name'
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadyOnly]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

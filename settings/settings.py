@@ -90,10 +90,9 @@ INSTALLED_APPS = [
 
     # Applications
     'accounts',
-    'topic.apps.TopicConfig',
-    'post.apps.PostConfig',
-    'comment.apps.CommentConfig',
-    'user.apps.UserConfig',
+    'topic',
+    'post',
+    'comment',
 ]
 
 SITE_ID = 1

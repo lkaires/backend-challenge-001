@@ -24,6 +24,5 @@ urlpatterns = [
 
     # Applications
     url(r'^', include('accounts.urls')),
-    url(r'^', include('user.urls')),
     url(r'^', include(('topic.urls'))),
 ]

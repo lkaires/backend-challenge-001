@@ -23,6 +23,7 @@ from .views import (
     ChangeEmailConfirmationViewSet,
     FacebookLogin,
     GoogleLogin,
+    UserViewSet,
 )
 
 ###
@@ -30,6 +31,7 @@ from .views import (
 ###
 """ Main router """
 router = routers.SimpleRouter()
+router.register(r'users', UserViewSet)
 
 ###
 # URLs

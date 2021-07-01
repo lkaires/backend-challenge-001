@@ -1,21 +1,17 @@
-from django.shortcuts import render
-from helpers.views import AuthorPermissionViewSet, DetailViewSet
-from post.serializers import PostSerializer, DetailPostSerializer
+from rest_framework import viewsets, permissions
+from helpers.permissions import IsAuthorOrReadyOnly
+from post.serializers import PostSerializer
 from post.models import Post
 from topic.models import Topic
-from rest_framework.generics import get_object_or_404
 
-class PostViewSet(AuthorPermissionViewSet, DetailViewSet):
-    queryset = Post.objects.all()
+class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
-    detail_serializer_class = DetailPostSerializer
-
-    # Returns topic pk (url_name)
-    def get_topic(self):
-        return get_object_or_404(Topic, url_name=self.kwargs.get('topic_pk'))
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadyOnly]
 
     def get_queryset(self):
-        return Post.objects.filter(topic=self.get_topic())
+        return Post.objects.filter(topic__url_name=self.kwargs['topic_url_name'])
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, topic=self.get_topic())
+        author = self.request.user
+        topic = Topic.objects.get(url_name=self.kwargs['topic_url_name'])
+        serializer.save(author=author, topic=topic)
