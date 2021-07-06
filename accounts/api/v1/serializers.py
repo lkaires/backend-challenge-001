@@ -18,9 +18,11 @@ from accounts.forms import (
 )
 
 from accounts.models import User as Author
-from topic.serializers import NestedTopicSerializer
-from post.serializers import NestedPostSerializer
-from comment.serializers import NestedCommentSerializer
+from reddit.api.v1.serializers import (
+    NestedTopicSerializer,
+    NestedPostSerializer,
+    NestedCommentSerializer,
+)
 
 
 ###

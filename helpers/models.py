@@ -6,8 +6,6 @@ Model helper
 ###
 from django.db import models
 
-from accounts.models import User
-
 
 ###
 # Helpers
@@ -34,12 +32,15 @@ class BaseInfoModel (TimestampModel):
     )
     description = models.TextField()
     author = models.ForeignKey(
-        User,
+        'accounts.user',
         related_name='%(class)s',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         abstract = True
