@@ -27,10 +27,21 @@ class BaseInfoModel (TimestampModel):
         Extend this model to have basic info
         Orders by update
     """
-    title = models.CharField(max_length=100, default="", blank=True)
+    title = models.CharField(
+        max_length=100,
+    )
     description = models.TextField()
-    author = models.ForeignKey('accounts.User', related_name='%(class)s', on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(
+        'accounts.user',
+        related_name='%(class)s',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         abstract = True
-        ordering = ["updated_at"]
+        ordering = ["-updated_at"]

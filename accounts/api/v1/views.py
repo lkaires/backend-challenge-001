@@ -17,6 +17,7 @@ from rest_framework import (
     permissions,
     status,
     generics,
+    viewsets,
 )
 from rest_framework.response import Response
 from rest_auth.registration.views import SocialLoginView
@@ -27,6 +28,8 @@ from accounts.models import (
 )
 from . import serializers
 
+from helpers.permissions import IsAuthorOrReadyOnly
+from accounts.models import User
 
 ###
 # Filters
@@ -110,3 +113,9 @@ class FacebookLogin(SocialLoginView):
 
 class GoogleLogin(SocialLoginView):
     adapter_class = CustomGoogleOAuth2Adapter
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadyOnly]

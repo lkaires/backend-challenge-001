@@ -90,10 +90,7 @@ INSTALLED_APPS = [
 
     # Applications
     'accounts',
-    'topic.apps.TopicConfig',
-    'post.apps.PostConfig',
-    'comment.apps.CommentConfig',
-    'user.apps.UserConfig',
+    'reddit',
 ]
 
 SITE_ID = 1
